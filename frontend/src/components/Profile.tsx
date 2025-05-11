@@ -1,19 +1,20 @@
-import { Locate, Mail, MapPinIcon, MapPinned, Plus } from "lucide-react";
+import { Loader2, Locate, Mail, MapPinIcon, MapPinned, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import React, { useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Button } from "./ui/button";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
     fullName: "",
     email: "",
-    phone: "",
     address: "",
     city: "",
     country: "",
     profilePicture: "",
   });
+  const loading = false;
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [selectProfilePicture, setSelectProfilePicture] = useState<string>("");
   const FileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,13 +36,16 @@ const Profile = () => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
   };
-  const updateProfileHandler = (e: React.ChangeEvent<HTMLFormElement>) => {};
+  const updateProfileHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(profileData)
+  };
   return (
-    <form className="max-w-7xl mx-auto my-5">
+    <form onSubmit={updateProfileHandler} className="max-w-7xl mx-auto my-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Avatar className="relative md:h-28 w-20 h-20">
-            <AvatarImage />
+            <AvatarImage src={selectProfilePicture} />
             <AvatarFallback>CN</AvatarFallback>
             <input
               ref={imageRef}
@@ -59,7 +63,8 @@ const Profile = () => {
           </Avatar>
           <Input
             type="text"
-            name={profileData.fullName}
+            value={profileData.fullName}
+            name="fullName"
             onChange={changeHandler}
             className="font-bold text-2xl border-none outline-none focus-visible:ring-transparent"
           />
@@ -118,6 +123,11 @@ const Profile = () => {
               className="w-full text-gray-600 bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
             />
           </div>
+        </div>
+        <div>
+          {
+              loading ? (<Button disabled><Loader2 className="mr-2 w-4 h-4 animate-spin"></Loader2>Please wait</Button>):(<Button>Update</Button>)
+          }
         </div>
       </div>
     </form>
