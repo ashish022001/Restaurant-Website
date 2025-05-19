@@ -1,8 +1,10 @@
 
+
 const FilterPage = () => {
   return (
-    <div>FilterPage</div>
+    <div>Filter Page</div>
   )
 }
 
 export default FilterPage
+
