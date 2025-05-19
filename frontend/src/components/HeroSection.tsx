@@ -3,8 +3,10 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { Button } from "./ui/button";
 import FoodImage from "@/assets/food.png";
+import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
   const [searchText, setSearchText] = useState<string>("");
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col md:flex-row max-w-7xl mx-auto md:p-10 rounded-lg items-center justify-center m-4 gap-20">
       <div className=" flex flex-col gap-10 md:w-[40%]">
@@ -26,7 +28,7 @@ const HeroSection = () => {
             className="pl-10 border-2"
           />
           <Search className="absolute inset-2 left-2 text-gray-500" />
-          <Button className="mt-0.5">Search</Button>
+          <Button onClick={() => navigate(`/search/${searchText}`)} className="mt-0.5">Search</Button>
         </div>
       </div>
       <div>
